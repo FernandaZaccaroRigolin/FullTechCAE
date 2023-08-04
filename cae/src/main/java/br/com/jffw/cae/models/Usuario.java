@@ -2,12 +2,19 @@ package br.com.jffw.cae.models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -26,12 +33,18 @@ public class Usuario {
 	@Column(name = "SENHA")
 	private String senha;
 	
+    @Temporal(value = TemporalType.TIMESTAMP)
 	@Column(name = "DTCADASTRO")
 	private Date dtCadastro; 
 	
 	@Column(name = "NIVELACESSO")
 	private String nivelAcesso;
-
+	
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
+    private Proprietario proprietario;
+    //private List<Proprietario> proprietarios;
+    
+    
 	public int getId() {
 		return id;
 	}

@@ -11,7 +11,7 @@ CREATE TABLE `tb_usuarios` (
   PRIMARY KEY (`ID`)
 );
 
-CREATE TABLE `tb_moradores`
+CREATE TABLE `tb_proprietarios`
 (
 	 `CPF` 			varchar(11) not null,
 	 `NOME` 		varchar(100) not null,
@@ -19,7 +19,7 @@ CREATE TABLE `tb_moradores`
 	 `DTNASCIMENTO`	datetime null,
 	 `EMAIL` 		varchar(50)  not null,
   	 `FOTO`         blob, 
-	 `IDUSUARIO`	int null,
+	 `IDUSUARIO`	int null unique,
 	 PRIMARY KEY (`CPF`),
 	 FOREIGN KEY (`IDUSUARIO`) REFERENCES tb_usuarios (`ID`)
 );
@@ -30,7 +30,9 @@ CREATE TABLE `tb_apartamentos`
 	`NUMERO`     	   varchar(5) not null,
 	`ANDAR`            varchar(2) not null,
 	`QNDVAGAS`   	   int not null,
-	PRIMARY KEY (`ID`)
+    `CPF`	           varchar(11),
+	PRIMARY KEY (`ID`),
+    FOREIGN KEY (`CPF`) REFERENCES tb_proprietarios (`CPF`)
 );
 
 CREATE TABLE `tb_vagas`
@@ -38,8 +40,10 @@ CREATE TABLE `tb_vagas`
     `ID`               int not null AUTO_INCREMENT,
 	`BLOCO`     	   varchar(5) not null,
 	`NUMERO`           varchar(5) not null,
-	PRIMARY KEY (`ID`)
-);
+    `IDAPARTAMENTO`    int null,
+	PRIMARY KEY (`ID`),
+    FOREIGN KEY (`IDAPARTAMENTO`) REFERENCES tb_apartamentos (`ID`)
+ );
 
 CREATE TABLE `tb_veiculos`
 (
@@ -47,33 +51,16 @@ CREATE TABLE `tb_veiculos`
 	`COR`     	   varchar(10) not null,
 	`MODELO`       varchar(10) not null,
 	`FOTO`         blob, 
-	PRIMARY KEY (`PLACA`)
+    `IDAPARTAMENTO`    int null,
+    `IDVAGA`       int null,
+	PRIMARY KEY (`PLACA`),
+    FOREIGN KEY (`IDAPARTAMENTO`) REFERENCES tb_apartamentos (`ID`),
+    FOREIGN KEY (`IDVAGA`) REFERENCES tb_vagas (`ID`)
 );
 
 
-CREATE TABLE `tb_apartamentos_moradores`
-(
-	`ID`            int not null AUTO_INCREMENT,
-    `IDAPARTAMENTO` int not null,
-	`CPFMORADOR`    varchar(11) NOT NULL,
-	`DTCADASTRO` 	datetime not null,
-	`ACESSO`        varchar(10) not null,
-	PRIMARY KEY (`ID`),
-	FOREIGN KEY (`IDAPARTAMENTO`) REFERENCES tb_apartamentos (`ID`),
-	FOREIGN KEY (`CPFMORADOR`) REFERENCES tb_moradores (`CPF`)	
-);
+  
 
-CREATE TABLE `tb_vagas_veiculos`
-(
-	`ID`            int not null AUTO_INCREMENT,
-    `IDAPARTAMENTO` int not null,
-	`IDVAGA`        int not null,
-	`PLACAVEICULO`  varchar(10) null,
-	`DTCADASTRO` 	datetime not null,
-	`ACESSO`        varchar(10) not null,
-	PRIMARY KEY (`ID`),
-	FOREIGN KEY (`IDAPARTAMENTO`) REFERENCES tb_apartamentos (`ID`),	
-	FOREIGN KEY (`IDVAGA`) REFERENCES tb_vagas (`ID`),	
-	FOREIGN KEY (`PLACAVEICULO`) REFERENCES tb_veiculos (`PLACA`)	
-);
+
+
 
