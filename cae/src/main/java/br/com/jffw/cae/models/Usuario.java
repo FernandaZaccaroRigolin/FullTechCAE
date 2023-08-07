@@ -1,6 +1,7 @@
 package br.com.jffw.cae.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,8 +42,8 @@ public class Usuario {
 	private String nivelAcesso;
 	
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
-    private Proprietario proprietario;
-    //private List<Proprietario> proprietarios;
+    //private Proprietario proprietario;
+    private List<Proprietario> proprietarios;
     
     
 	public int getId() {
@@ -91,6 +92,14 @@ public class Usuario {
 
 	public void setNivelAcesso(String nivelAcesso) {
 		this.nivelAcesso = nivelAcesso;
+	}
+
+	public List<Proprietario> getProprietarios() {
+		return proprietarios;
+	}
+
+	public void setProprietarios(List<Proprietario> proprietarios) {
+		this.proprietarios = proprietarios;
 	}
 	
 	

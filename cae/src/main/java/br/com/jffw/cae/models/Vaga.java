@@ -1,5 +1,7 @@
 package br.com.jffw.cae.models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,13 +28,54 @@ public class Vaga {
 	
     @Column(name = "NUMERO")
 	private String numero;
-	
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID")
-    private Apartamento apartamento;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDAPARTAMENTO")
+    private Apartamento apartamento;    
+	
+   
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "vaga")
-    //private List<Veiculo> veiculos;
-    Veiculo veiculo;
+    private List<Veiculo> veiculos;
+    //Veiculo veiculo;
+    
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getBloco() {
+		return bloco;
+	}
+
+	public void setBloco(String bloco) {
+		this.bloco = bloco;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public Apartamento getApartamento() {
+		return apartamento;
+	}
+
+	public void setApartamento(Apartamento apartamento) {
+		this.apartamento = apartamento;
+	}
+
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+
+	public void setVeiculos(List<Veiculo> veiculos) {
+		this.veiculos = veiculos;
+	}
 	
 }
