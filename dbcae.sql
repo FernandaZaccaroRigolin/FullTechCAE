@@ -11,6 +11,16 @@ CREATE TABLE `tb_usuarios` (
   PRIMARY KEY (`ID`)
 );
 
+CREATE TABLE `tb_apartamentos`
+(
+    `ID`               int not null AUTO_INCREMENT,
+	`NUMERO`     	   varchar(5) not null,
+	`ANDAR`            varchar(2) not null,
+	`QNDVAGAS`   	   int not null,
+    `CPF`	           varchar(11),
+	PRIMARY KEY (`ID`)
+);
+
 CREATE TABLE `tb_proprietarios`
 (
 	 `CPF` 			varchar(11) not null,
@@ -19,20 +29,9 @@ CREATE TABLE `tb_proprietarios`
 	 `DTNASCIMENTO`	datetime null,
 	 `EMAIL` 		varchar(50)  not null,
   	 `FOTO`         blob, 
-	 `IDUSUARIO`	int null unique,
+	 `IDAPARTAMENTO`	int null unique,
 	 PRIMARY KEY (`CPF`),
-	 FOREIGN KEY (`IDUSUARIO`) REFERENCES tb_usuarios (`ID`)
-);
-
-CREATE TABLE `tb_apartamentos`
-(
-    `ID`               int not null AUTO_INCREMENT,
-	`NUMERO`     	   varchar(5) not null,
-	`ANDAR`            varchar(2) not null,
-	`QNDVAGAS`   	   int not null,
-    `CPF`	           varchar(11),
-	PRIMARY KEY (`ID`),
-    FOREIGN KEY (`CPF`) REFERENCES tb_proprietarios (`CPF`)
+	 FOREIGN KEY (`IDAPARTAMENTO`) REFERENCES tb_apartamentos (`ID`)
 );
 
 CREATE TABLE `tb_vagas`
@@ -54,9 +53,14 @@ CREATE TABLE `tb_veiculos`
     `IDAPARTAMENTO`    int null,
     `IDVAGA`       int null,
 	PRIMARY KEY (`PLACA`),
-    FOREIGN KEY (`IDAPARTAMENTO`) REFERENCES tb_apartamentos (`ID`),
     FOREIGN KEY (`IDVAGA`) REFERENCES tb_vagas (`ID`)
 );
+
+insert into `tb_usuarios`
+  (`ID`, `NOME`, `EMAIL`, `SENHA`, `DTCADASTRO`, `NIVELACESSO`)
+values
+ (1, 'Administrador', 'admin@mail.com',  'admRoot', NOW(), 'ADMINISTRADOR');  
+
 
 
   
