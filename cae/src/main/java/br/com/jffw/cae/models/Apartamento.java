@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,25 +24,20 @@ public class Apartamento {
     @Column(name = "NUMERO")
     private String numero;
     
-    @Column(name = "ANDAR")
-    private String andar;
+    @Column(name = "BLOCO")
+    private String bloco;
     
     @Column(name = "QNDVAGAS")
     private int qndVagas;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CPF")
-    private Proprietario proprietario;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "apartamento")
+    private List<Proprietario> proprietarios;    
   
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "apartamento")
     private List<Vaga> vagas;
-//    //private Vaga vaga; 
-//    
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "apartamento")
-//    private List<Veiculo> veiculos;
-//    //private Veiculo veiculo;
-//
+    
+    
 	public int getId() {
 		return id;
 	}
@@ -61,12 +54,12 @@ public class Apartamento {
 		this.numero = numero;
 	}
 
-	public String getAndar() {
-		return andar;
+	public String getBloco() {
+		return bloco;
 	}
 
-	public void setAndar(String andar) {
-		this.andar = andar;
+	public void setBloco(String andar) {
+		this.bloco = andar;
 	}
 
 	public int getQndVagas() {
@@ -77,27 +70,22 @@ public class Apartamento {
 		this.qndVagas = qndVagas;
 	}
 
-	public Proprietario getProprietario() {
-		return proprietario;
+	public List<Proprietario> getProprietarios() {
+		return proprietarios;
 	}
 
-	public void setProprietario(Proprietario proprietario) {
-		this.proprietario = proprietario;
+	public void setProprietarios(List<Proprietario> proprietarios) {
+		this.proprietarios = proprietarios;
 	}
 
-//	public List<Vaga> getVagas() {
-//		return vagas;
-//	}
-//
-//	public void setVagas(List<Vaga> vagas) {
-//		this.vagas = vagas;
-//	}
+	public List<Vaga> getVagas() {
+		return vagas;
+	}
 
-//	public List<Veiculo> getVeiculos() {
-//		return veiculos;
-//	}
-//
-//	public void setVeiculos(List<Veiculo> veiculos) {
-//		this.veiculos = veiculos;
-//	}
+	public void setVagas(List<Vaga> vagas) {
+		this.vagas = vagas;
+	}
+
+
+
 }

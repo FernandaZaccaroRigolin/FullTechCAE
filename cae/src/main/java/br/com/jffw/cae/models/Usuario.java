@@ -1,16 +1,12 @@
 package br.com.jffw.cae.models;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,9 +37,8 @@ public class Usuario {
 	@Column(name = "NIVELACESSO")
 	private String nivelAcesso;
 	
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
-    //private Proprietario proprietario;
-    private List<Proprietario> proprietarios;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usuario")
+//    private List<Proprietario> proprietarios;
     
     
 	public int getId() {
@@ -94,13 +89,13 @@ public class Usuario {
 		this.nivelAcesso = nivelAcesso;
 	}
 
-	public List<Proprietario> getProprietarios() {
-		return proprietarios;
-	}
-
-	public void setProprietarios(List<Proprietario> proprietarios) {
-		this.proprietarios = proprietarios;
-	}
+//	public List<Proprietario> getProprietarios() {
+//		return proprietarios;
+//	}
+//
+//	public void setProprietarios(List<Proprietario> proprietarios) {
+//		this.proprietarios = proprietarios;
+//	}
 	
 	
 }
