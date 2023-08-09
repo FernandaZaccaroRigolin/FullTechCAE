@@ -31,7 +31,7 @@
 		<form action="/usuarios/remover" method="post">
 
 			<div class="mb-3">
-				<input type="hidden" name="cpf" value="${cliente.cpf}" />
+				<input type="hidden" name="cpf" value="${usuario.cpf}" />
 				<div>
 					<a href="/clientes/lista">Não, retornar para a lista</a> |
 					<button type="submit" class="btn btn-danger">Sim, remover</button>
