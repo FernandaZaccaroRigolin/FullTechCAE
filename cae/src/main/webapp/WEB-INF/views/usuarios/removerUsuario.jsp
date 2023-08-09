@@ -28,7 +28,7 @@
 			<div>Nome: ${usuario.nome}</div>
 		</div>
 
-		<form action="/clientes/remover" method="post">
+		<form action="/usuarios/remover" method="post">
 
 			<div class="mb-3">
 				<input type="hidden" name="cpf" value="${cliente.cpf}" />
