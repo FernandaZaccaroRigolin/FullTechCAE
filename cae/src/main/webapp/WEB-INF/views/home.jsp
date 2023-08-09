@@ -46,32 +46,38 @@
       </button>
     </header>
     <div class="d-flex justify-content-between">
-      <div class="imagem">
+      <!-- <div class="imagem">
         <img src="${pageContext.request.contextPath}/imagens/Garoto2.jpeg" />
-      </div>
+      </div> -->
       <div class="container text-center">
         <!-- <h2 class="font-italic"></h2> -->
         <h1>Controle de acesso a estacionamentos</h1>
         <div class="d-flex justify-content-between">
-          <div class="border" style="width: 290px">
-            <img src="${pageContext.request.contextPath}/imagens/user2.png" />
-            <a href="/usuarios/novo">Proprietarios</a>
-          </div>
-          <div class="border" style="width: 290px">
+          <div class="border" style="width: 300px">
             <img
-              src="${pageContext.request.contextPath}/imagens/Apartamento.png"
+              src="${pageContext.request.contextPath}/imagens/usuario1.jpeg"
             />
-            <a href="/usuarios/novo">Apartamentos</a>
+            <a href="/usuarios/lista">Usu&aacute;rios</a>
           </div>
-          <div class="border" style="width: 290px">
+          <div class="border" style="width: 300px">
             <img
-              src="${pageContext.request.contextPath}/imagens/Estacionamento2.png"
+              src="${pageContext.request.contextPath}/imagens/proprietario2.png"
             />
-            <a href="/usuarios/novo">Vagas</a>
+            <a href="/usuarios/manutencao">Propriet&aacute;rios</a>
           </div>
-          <div class="border" style="width: 250px">
+          <div class="border" style="width: 300px">
+            <img
+              src="${pageContext.request.contextPath}/imagens/apartamento.png"
+            />
+            <a href="/usuarios/manutencao">Apartamentos</a>
+          </div>
+          <div class="border" style="width: 300px">
+            <img src="${pageContext.request.contextPath}/imagens/vaga.png" />
+            <a href="/usuarios/manutencao">Vagas</a>
+          </div>
+          <div class="border" style="width: 300px">
             <img src="${pageContext.request.contextPath}/imagens/veiculo.png" />
-            <a href="/usuarios/novo">Veiculos</a>
+            <a href="/usuarios/manutencao">Ve&iacute;culos</a>
           </div>
         </div>
       </div>
