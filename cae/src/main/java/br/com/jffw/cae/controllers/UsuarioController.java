@@ -34,7 +34,6 @@ public class UsuarioController {
 		try {
 			usuarioRepository.save(usuario);
 			
-			//System.out.println(usuario);
 			return "redirect:/usuarios/lista";
 		} catch (Exception e) {
 			model.addAttribute("msg_erro", e.toString());

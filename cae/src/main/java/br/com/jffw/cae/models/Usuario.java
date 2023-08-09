@@ -1,5 +1,8 @@
 package br.com.jffw.cae.models;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -78,6 +81,7 @@ public class Usuario {
 	}
 
 	public void setDtCadastro(Date dtCadastro) {
+		
 		this.dtCadastro = dtCadastro;
 	}
 
@@ -89,6 +93,11 @@ public class Usuario {
 		this.nivelAcesso = nivelAcesso;
 	}
 
+	public void setDataCadastro(String dtCadastro) throws ParseException {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		this.setDtCadastro(df.parse(dtCadastro));
+	}
+	
 //	public List<Proprietario> getProprietarios() {
 //		return proprietarios;
 //	}
