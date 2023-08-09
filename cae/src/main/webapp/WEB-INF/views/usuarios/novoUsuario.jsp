@@ -34,13 +34,14 @@
 				<label class="form-label">Senha:</label> <input type="text"
 					name="senha" class="form-control" />
 			</div>
-
+			
 			<div class="mb-3">
 				<label class="form-label">Data:</label> <input type="date"
 					name="dataCadastro" class="form-control" />
 			</div>
 			<div class="mb-3">
-				<label class="form-label">Nível Acesso:</label> <select
+				<label class="form-label">Nível Acesso:</label> 
+				<select
 					class="form-control" name="nivelAcesso" id="nivelacesso">
 					<option value="ADMINISTRADOR">Administrador</option>
 					<option value="FUNCIONARIO">Funcionário</option>
@@ -48,12 +49,8 @@
 				</select>
 			</div>
 			<button type="submit" class="btn btn-primary">Incluir</button>
-			<a href="/usuarios/lista" class="btn btn-secondary">Voltar para a
-				lista</a>
+			<a href="/usuarios/lista" class="btn btn-secondary">Voltar para a lista</a>
 		</form>
 	</div>
-
-
-
 </body>
 </html>

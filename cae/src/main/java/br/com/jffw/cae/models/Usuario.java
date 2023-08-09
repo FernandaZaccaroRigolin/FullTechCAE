@@ -78,6 +78,7 @@ public class Usuario {
 	}
 
 	public void setDtCadastro(Date dtCadastro) {
+		
 		this.dtCadastro = dtCadastro;
 	}
 
