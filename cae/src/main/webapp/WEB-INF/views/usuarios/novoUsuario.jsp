@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Cadastro de Clientes</title>
+<title>Cadastro de Usuários</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -21,34 +21,36 @@
 <body>
 	<div class="container borda">
 		<h2 class="text-primary text-center">Cadastro de Usuários</h2>
-		<form>
+		<form action="/usuarios/novo" method="post">
 			<div class="mb-3">
 				<label class="form-label">Nome:</label> <input type="text"
 					name="nome" class="form-control" />
 			</div>
-
 			<div class="mb-3">
 				<label class="form-label">Email:</label> <input type="text"
 					name="email" class="form-control" />
 			</div>
-
 			<div class="mb-3">
 				<label class="form-label">Senha:</label> <input type="text"
-					name="telefone" class="form-control" />
+					name="senha" class="form-control" />
 			</div>
-
+			
+			<div class="mb-3">
+				<label class="form-label">Data:</label> <input type="date"
+					name="dataCadastro" class="form-control" />
+			</div>
 			<div class="mb-3">
 				<label class="form-label">Nível Acesso:</label> 
-				<select class="form-control" name="nivelAcesso" id="nivelacesso">
-					<option value="administrador">Administrador</option>
-					<option value="funcionario">Funcionário</option>
-					<option value="morador">Morador</option>
+				<select
+					class="form-control" name="nivelAcesso" id="nivelacesso">
+					<option value="ADMINISTRADOR">Administrador</option>
+					<option value="FUNCIONARIO">Funcionário</option>
+					<option value="MORADOR">Morador</option>
 				</select>
 			</div>
-
 			<button type="submit" class="btn btn-primary">Incluir</button>
+			<a href="/usuarios/lista" class="btn btn-secondary">Voltar para a lista</a>
 		</form>
 	</div>
-
 </body>
 </html>

@@ -36,7 +36,6 @@ public class Vaga {
    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "vaga")
     private List<Veiculo> veiculos;
-    //Veiculo veiculo;
     
 	public int getId() {
 		return id;

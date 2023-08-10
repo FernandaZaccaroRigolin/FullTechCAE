@@ -1,16 +1,13 @@
 package br.com.jffw.cae.models;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -38,14 +35,10 @@ public class Proprietario {
 //	//private byte[] foto;
 //	
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDUSUARIO")
-    private Usuario usuario;	
+    @JoinColumn(name = "IDAPARTAMENTO")
+    private Apartamento apartamento;	
 	
-	
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "proprietario")
-    private List<Apartamento> apartamentos;
-    //private Apartamento apartamento;
-    
+   
 	public String getCpf() {
 		return cpf;
 	}
@@ -86,19 +79,14 @@ public class Proprietario {
 		this.email = email;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Apartamento getApartamento() {
+		return apartamento;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setApartamento(Apartamento apartamento) {
+		this.apartamento = apartamento;
 	}
+	
+	
 
-//	public List<Apartamento> getApartamentos() {
-//		return apartamentos;
-//	}
-//
-//	public void setApartamentos(List<Apartamento> apartamentos) {
-//		this.apartamentos = apartamentos;
-//	}
 }

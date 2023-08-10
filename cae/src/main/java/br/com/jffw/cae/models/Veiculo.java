@@ -28,10 +28,6 @@ public class Veiculo {
     @JoinColumn(name = "IDVAGA")
     private Vaga vaga;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDAPARTAMENTO")
-    private Apartamento apartamento;
-
 	public String getPlaca() {
 		return placa;
 	}
@@ -63,15 +59,5 @@ public class Veiculo {
 	public void setVaga(Vaga vaga) {
 		this.vaga = vaga;
 	}
-
-	public Apartamento getApartamento() {
-		return apartamento;
-	}
-
-	public void setApartamento(Apartamento apartamento) {
-		this.apartamento = apartamento;
-	}
-    
-    
     
 }

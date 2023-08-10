@@ -15,7 +15,7 @@ CREATE TABLE `tb_apartamentos`
 (
     `ID`               int not null AUTO_INCREMENT,
 	`NUMERO`     	   varchar(5) not null,
-	`ANDAR`            varchar(2) not null,
+	`BLOCO`            varchar(15) not null,
 	`QNDVAGAS`   	   int not null,
     `CPF`	           varchar(11),
 	PRIMARY KEY (`ID`)
