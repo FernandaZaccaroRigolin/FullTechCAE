@@ -25,8 +25,11 @@
 	<div class="container borda">
 		<h2 class="text-primary text-center">Alteração de Usuarios</h2>
 		<form action="/usuarios/alterar" method="post">
-<%-- 			<input type="hidden" name="dtCadastro" value="${usuario.dtCadastro}" /> --%>
-			<input name="dtCadastro" value="${usuario.dtCadastro}" />
+            <input type="hidden" name="id" value="${usuario.id}" />
+            <input type="hidden" name="senha" value="${usuario.senha}" />
+            <input type="date" name="dataCadastro" value=<fmt:formatDate value="${usuario.dtCadastro}" pattern="dd-MM-yyyy"/> >
+            
+		
 			<div class="mb-3">
 				<label class="form-label">Nome:</label> <input type="text"
 					name="nome" class="form-control" value="${usuario.nome}" />
@@ -37,15 +40,9 @@
 					name="email" class="form-control" value="${usuario.email}" />
 			</div>
 
-			<!-- 			<div class="mb-3"> -->
-			<!-- 				<label class="form-label">Senha:</label> <input type="text" -->
-			<!-- 					name="telefone" class="form-control" /> -->
-			<!-- 			</div> -->
-<!-- 			<div class="mb-3"> -->
-<!-- 				<label class="form-label">Data:</label> <input type="date" -->
-<%-- 					name="dataCadastro" class="form-control" value="${usuario.dtCadastro}"/> --%>
-<%-- 				<fmt:formatDate value="${usuario.dtCadastro}" pattern="dd/MM/yyyy" name="dataCadastro"/> --%>
-<!-- 			</div> -->
+
+			
+			
 
 			<div class="mb-3">
 				<label class="form-label">Nível Acesso:</label> <select

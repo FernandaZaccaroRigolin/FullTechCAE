@@ -94,7 +94,7 @@ public class Usuario {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		this.setDtCadastro(df.parse(dtCadastro));
 	}
-
+	
 //	public List<Proprietario> getProprietarios() {
 //		return proprietarios;
 //	}
