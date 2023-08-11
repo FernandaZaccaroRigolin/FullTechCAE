@@ -18,11 +18,11 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <%@ taglib
     uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <div class="container">
-      <h2 class="text-primary text-center">Lista de Usu&aacute;rios</h2>
+      <h2 class="text-primary text-center">Lista de Usuarios</h2>
 
       <div class="margem-botao">
         <a href="/usuarios/novo" class="btn btn-primary"
-          >Novo Usu&aacute;rio</a
+          >Novo Usuario</a
         >
       </div>
 
