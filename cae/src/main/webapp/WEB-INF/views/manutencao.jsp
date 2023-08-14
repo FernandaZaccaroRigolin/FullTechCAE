@@ -53,9 +53,8 @@
         </svg>
       </a>
     </header>
-
     <div class="container conteudo-main">
-      <div class="alert alert-danger">${msg_erro}</div>
+      <div class="alert alert-danger">P&aacute;gina em Desenvolvimento</div>
     </div>
     <footer
       class="conteudo-rodape component-footer d-flex p-2 bd-highlight justify-content-between px-md-5 border"

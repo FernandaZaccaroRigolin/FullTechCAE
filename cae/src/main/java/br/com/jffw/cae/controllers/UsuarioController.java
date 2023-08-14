@@ -1,6 +1,8 @@
 package br.com.jffw.cae.controllers;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.jffw.cae.dto.UsuarioDTO;
 import br.com.jffw.cae.models.Usuario;
+import br.com.jffw.cae.models.UsuarioLogado;
 import br.com.jffw.cae.repository.UsuarioRepository;
 
 @Controller
@@ -66,7 +70,11 @@ public class UsuarioController {
 	@PostMapping("/alterar")
 	public String alterar(Usuario usuario, Model model) {
 		try {
+			Usuario usu = usuarioRepository.getReferenceById(usuario.getId());
+			usuario.setDtCadastro(usu.getDtCadastro());
+			usuario.setSenha(usu.getSenha());
 			usuarioRepository.save(usuario);
+			
 			return "redirect:/usuarios/lista";
 		} catch (Exception e) {
 			model.addAttribute("msg_erro", e.toString());
@@ -94,4 +102,38 @@ public class UsuarioController {
 			return "erro";
 		}
 	}
+	
+	@PostMapping("/login")
+	public String iniciar(UsuarioLogado usuLogado, Model model) {
+		try {
+			UsuarioDTO usuDto = usuarioRepository.getUsuarioDTOByEmailSenha(usuLogado.getEmail(), usuLogado.getSenha());
+			if (Optional.ofNullable(usuDto).isEmpty()){
+				throw new NullPointerException("Usuário não localizado");
+			}
+			
+			if (!"ADMINISTRADOR".equals(usuDto.getNivelAcesso())){
+				throw new NullPointerException("Apenas administradores podem conectar neste módulo!");
+			}
+			
+			Usuario usuario = new Usuario();
+			usuario.setId(usuDto.getId());
+			usuario.setNome(usuDto.getNome());
+			usuario.setEmail(usuDto.getEmail());
+			usuario.setDtCadastro(usuDto.getDtCadastro());
+			usuario.setNivelAcesso(usuDto.getNivelAcesso());
+			
+			UsuarioLogado usLogado = new UsuarioLogado();
+			usLogado.setUsuarioLogado(usuario);
+			usLogado.setLogged(true);
+			model.addAttribute("usuLogado", usLogado);
+			return "home";			
+			
+			
+		} catch (Exception e) {
+			model.addAttribute("msg_erro", e.toString());
+			return "erro";
+			
+		}
+	}	
+	
 }

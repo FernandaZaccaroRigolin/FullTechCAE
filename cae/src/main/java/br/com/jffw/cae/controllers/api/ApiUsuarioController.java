@@ -33,10 +33,10 @@ public class ApiUsuarioController {
 	}
 
 	@PostMapping("/login")
-	public List<UsuarioDTO> buscarUsuario(@RequestBody Map<String, String> dados) {
+	public UsuarioDTO buscarUsuario(@RequestBody Map<String, String> dados) {
 		return usuarioService.loginUsuario(dados);
 	}
-
+	
 	@PostMapping("/")
 	public UsuarioDTO incluirUsuario(@RequestBody Map<String, String> dados) {
 		try {
@@ -50,6 +50,11 @@ public class ApiUsuarioController {
 	public UsuarioDTO alterarUsuario(@RequestBody Map<String, String> dados, @PathVariable String id) {
 		return usuarioService.alterar(dados, id);
 	}
+	
+	@PutMapping("/alterarSenha")
+	public ResponseEntity<String> alterarSenhaUsuario(@RequestBody Map<String, String> dados) {
+		return new ResponseEntity<String>(usuarioService.alterarSenhaUsuario(dados), HttpStatus.ACCEPTED);
+	}	
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteUsuario(@PathVariable String id) {
