@@ -2,6 +2,8 @@ package br.com.jffw.cae.controllers.api;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jffw.cae.dto.ProprietarioDTO;
+import br.com.jffw.cae.dto.ProprietarioListDTO;
 import br.com.jffw.cae.models.Proprietario;
 import br.com.jffw.cae.services.ProprietarioService;
 
@@ -25,42 +28,35 @@ public class ApiProprietarioController {
 	@Autowired
 	ProprietarioService proprietarioService;
 
-	@GetMapping("/lista")
-	public List<Proprietario> listarTodos() {
-		return proprietarioService.listarProprietarios();
-	}
-
-	@GetMapping("/{cpf}")
-	public Object listarProprietariosId(@PathVariable String cpf) {
-		return proprietarioService.listarProprietariosId(cpf);
-	}
-
 	@GetMapping("/")
-	public List<ProprietarioDTO> listarTodosDTO() {
+	public List<ProprietarioListDTO> listarTodosDTO() {
 		return proprietarioService.listarProprietariosDTO();
 	}
 
-	@GetMapping("/buscar/{cpf}")
-	public ProprietarioDTO buscarProprietario(@PathVariable String cpf) {
-		return proprietarioService.buscarProprietario(cpf);
-
+	@GetMapping("/{cpf}")
+	public ResponseEntity<?> buscarProprietarioPorCpf(@PathVariable String cpf) {
+		try {
+			ProprietarioListDTO dto = proprietarioService.buscarProprietarioPorCpf(cpf);
+			return ResponseEntity.ok(dto);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Proprietário não encontrado");
+		}
 	}
 
-	@PostMapping("/incluir")
-	public ResponseEntity<Object> incluirProprietario(@RequestBody Proprietario proprietario) {
+	@PostMapping("/")
+	public ResponseEntity<?> incluirProprietario(@RequestBody ProprietarioDTO dto) {
 		try {
-			return new ResponseEntity<Object>(proprietarioService.incluirProprietario(proprietario),
-					HttpStatus.CREATED);
+			Proprietario proprietario = proprietarioService.incluirProprietario(dto);
+			return ResponseEntity.ok(proprietario);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.badRequest().body("Erro ao incluir proprietário: " + e.getMessage());
 		}
 	}
 
 	@PutMapping("/{cpf}")
-	public ResponseEntity<String> alterarProprietario(@RequestBody Proprietario proprietario,
-			@PathVariable String cpf) {
-		Proprietario proprietarioatual = proprietarioService.alterar(proprietario, cpf);
+	public ResponseEntity<?> alterarProprietario(@RequestBody ProprietarioDTO dto, @PathVariable String cpf) {
 		try {
+			ResponseEntity<?> response = proprietarioService.alterar(dto, cpf);
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Alteração realizada com sucesso");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
