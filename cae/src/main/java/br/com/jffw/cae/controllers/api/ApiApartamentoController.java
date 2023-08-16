@@ -27,34 +27,46 @@ public class ApiApartamentoController {
 
 	@CrossOrigin
 	@GetMapping("/")
-	public List<ApartamentoDTO> listarTodosDTO() {
+	public List<ApartamentoDTO> listarApartamentosDTO() {
 		return apartamentoService.listarApartamentosDTO();
 	}
 
 	@GetMapping("/{id}")
-	public ApartamentoDTO buscarApartamento(@PathVariable String id) {
-		return apartamentoService.buscarApartamento(id);
+	public ResponseEntity<Object> buscarApartamento(@PathVariable String id) {
+		try {
+			return new ResponseEntity<Object>(apartamentoService.buscarApartamento(id), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+		}			
+		
 	}
 	
-	
 	@PostMapping("/")
-	public ApartamentoDTO incluirUsuario(@RequestBody Map<String, String> dados) {
+	public ResponseEntity<Object> incluirApartamento(@RequestBody Map<String, String> dados) {
 		try {
-			return apartamentoService.incluirApartamento(dados);
+			return new ResponseEntity<Object>(apartamentoService.incluirApartamento(dados), HttpStatus.CREATED);
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
 		}
 	}
 
 	@PutMapping("/{id}")
-	public ApartamentoDTO alterarApartamento(@RequestBody Map<String, String> dados, @PathVariable String id) {
-		return apartamentoService.alterar(dados, id);
-	}
+	public ResponseEntity<String> alterarApartamento(@RequestBody Map<String, String> dados, @PathVariable String id) {
+		
+		try {
+			return new ResponseEntity<String>(apartamentoService.alterarApartamento(dados, id), HttpStatus.CREATED);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+		}
+	}			
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteUsuario(@PathVariable String id) {
-		return new ResponseEntity<String>(apartamentoService.remover(id), HttpStatus.ACCEPTED);
-
+		try {
+			return new ResponseEntity<String>(apartamentoService.removerApartamento(id), HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+		}			
 	}
-
 }

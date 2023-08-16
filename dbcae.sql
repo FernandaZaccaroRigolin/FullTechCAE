@@ -17,7 +17,6 @@ CREATE TABLE `tb_apartamentos`
 	`NUMERO`     	   varchar(5) not null,
 	`BLOCO`            varchar(15) not null,
 	`QNDVAGAS`   	   int not null,
-    `CPF`	           varchar(11),
 	PRIMARY KEY (`ID`)
 );
 
@@ -50,8 +49,7 @@ CREATE TABLE `tb_veiculos`
 	`COR`     	   varchar(10) not null,
 	`MODELO`       varchar(10) not null,
 	`FOTO`         blob, 
-    `IDAPARTAMENTO`    int null,
-    `IDVAGA`       int null,
+    `IDVAGA`       int not null,
 	PRIMARY KEY (`PLACA`),
     FOREIGN KEY (`IDVAGA`) REFERENCES tb_vagas (`ID`)
 );

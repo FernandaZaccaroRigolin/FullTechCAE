@@ -59,7 +59,7 @@ public class ApartamentoService {
 		return new ApartamentoDTO(apartamento.getId(), apartamento.getNumero(), apartamento.getBloco(), apartamento.getQndVagas());
 	}
 
-	public ApartamentoDTO alterar(Map<String, String> dados, String idApartamento) {
+	public String alterarApartamento(Map<String, String> dados, String idApartamento) {
 		String numero = dados.get("numero");
 		String bloco = dados.get("bloco");
 		int qndVagas = Integer.parseInt(dados.get("qndvagas"));
@@ -73,7 +73,7 @@ public class ApartamentoService {
 			Apartamento ap = apartamentoRepository.findByNumero(numero);
 			
 			if (!Optional.ofNullable(ap).isEmpty()){	
-				throw new RuntimeException("Este numero de apartamento já existe");
+				throw new RuntimeException("Este número de apartamento já foi cadastrado.");
 			}		
 		}
 		
@@ -82,16 +82,13 @@ public class ApartamentoService {
 		apartamento.setQndVagas(qndVagas);
 
 		apartamentoRepository.save(apartamento);
-		return new ApartamentoDTO(apartamento.getId(), apartamento.getNumero(), apartamento.getBloco(), apartamento.getQndVagas());
+		return "Alteração realizada com sucesso!";
+		//return new ApartamentoDTO(apartamento.getId(), apartamento.getNumero(), apartamento.getBloco(), apartamento.getQndVagas());
 
 	}
 
-	public String remover(String idApartamento) {
-		try {
-			apartamentoRepository.deleteById(Integer.parseInt(idApartamento));
-			return String.format("Apartamento removido com sucesso");
-		} catch (Exception e) {
-			return e.toString();
-		}
+	public String removerApartamento(String idApartamento) {
+		apartamentoRepository.deleteById(Integer.parseInt(idApartamento));
+		return"Apartamento removido com sucesso";
 	}
 }

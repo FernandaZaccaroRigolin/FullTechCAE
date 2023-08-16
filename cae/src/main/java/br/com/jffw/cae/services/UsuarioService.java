@@ -65,7 +65,7 @@ public class UsuarioService {
 		return new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getDtCadastro(), usuario.getNivelAcesso());
 	}	
 	
-	public UsuarioDTO alterar(Map<String, String> dados, String idUsuario) {
+	public String alterarUsuario(Map<String, String> dados, String idUsuario) {
 		String nome = dados.get("nome");
 		String email = dados.get("email");
 		String senha = dados.get("senha");
@@ -88,8 +88,8 @@ public class UsuarioService {
 		usuario.setNivelAcesso(nivelAcesso);
 		
 		usuarioRepository.save(usuario);
-		return new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getDtCadastro(), usuario.getNivelAcesso());
-
+		//return new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getDtCadastro(), usuario.getNivelAcesso());
+		return "Alteração realizada com sucesso!";
 	}
 	
 	public String alterarSenhaUsuario(Map<String, String> dados) {
@@ -111,16 +111,11 @@ public class UsuarioService {
 		usuario.setNivelAcesso(usu.getNivelAcesso());
 		
 		usuarioRepository.save(usuario);
-		
-		return String.format("Senha alterada com sucesso");
+		return "Senha alterada com sucesso";
 	}		
 	
-	public String remover(String idUsuario) {
-		try {
-			usuarioRepository.deleteById(Integer.parseInt(idUsuario));
-			return String.format("Usuario removido com sucesso");
-		} catch (Exception e) {
-			return e.toString();
-		}
+	public String removerUsuario(String idUsuario) {
+		usuarioRepository.deleteById(Integer.parseInt(idUsuario));
+		return "Usuário removido com sucesso";
 	}	
 }

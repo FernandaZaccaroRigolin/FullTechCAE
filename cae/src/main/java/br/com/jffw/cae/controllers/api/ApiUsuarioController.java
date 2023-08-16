@@ -33,33 +33,50 @@ public class ApiUsuarioController {
 	}
 
 	@PostMapping("/login")
-	public UsuarioDTO buscarUsuario(@RequestBody Map<String, String> dados) {
-		return usuarioService.loginUsuario(dados);
+	public ResponseEntity<Object> buscarUsuario(@RequestBody Map<String, String> dados) {
+		try {
+			return new ResponseEntity<Object>(usuarioService.loginUsuario(dados), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+		}		
 	}
 	
 	@PostMapping("/")
-	public UsuarioDTO incluirUsuario(@RequestBody Map<String, String> dados) {
+	public ResponseEntity<Object> incluirUsuario(@RequestBody Map<String, String> dados) {
 		try {
-			return usuarioService.incluirUsuario(dados);
+			return new ResponseEntity<Object>(usuarioService.incluirUsuario(dados), HttpStatus.CREATED);
+			
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
 		}
 	}
-
-	@PutMapping("/{id}")
-	public UsuarioDTO alterarUsuario(@RequestBody Map<String, String> dados, @PathVariable String id) {
-		return usuarioService.alterar(dados, id);
-	}
 	
+	@PutMapping("/{id}")
+	public ResponseEntity<String> alterarUsuario(@RequestBody Map<String, String> dados, @PathVariable String id) {
+		try {
+			return new ResponseEntity<String>(usuarioService.alterarUsuario(dados, id), HttpStatus.CREATED);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+		}
+	}		
+
 	@PutMapping("/alterarSenha")
 	public ResponseEntity<String> alterarSenhaUsuario(@RequestBody Map<String, String> dados) {
-		return new ResponseEntity<String>(usuarioService.alterarSenhaUsuario(dados), HttpStatus.ACCEPTED);
+		try {
+			return new ResponseEntity<String>(usuarioService.alterarSenhaUsuario(dados), HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+		}		
 	}	
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteUsuario(@PathVariable String id) {
-		return new ResponseEntity<String>(usuarioService.remover(id), HttpStatus.ACCEPTED);
-
+		try {
+			return new ResponseEntity<String>(usuarioService.removerUsuario(id), HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+		}			
 	}
 
 }
