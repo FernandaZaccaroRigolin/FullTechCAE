@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "tb_vagas")
 public class Vaga {
@@ -33,7 +35,7 @@ public class Vaga {
     @JoinColumn(name = "IDAPARTAMENTO")
     private Apartamento apartamento;    
 	
-   
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "vaga")
     private List<Veiculo> veiculos;
     
