@@ -144,7 +144,13 @@ public class ProprietarioService {
 			proprietarioRepository.deleteById(cpf);
 			return String.format("Proprietario %s removido com sucesso!", cpf);
 		} catch (Exception e) {
-			return e.toString();
+			throw new RuntimeException("Proprietario informado não existe.");
 		}
 	}
+//	try {
+//        vagaRepository.deleteById(Integer.parseInt(id));
+//        return "Vaga deletada com sucesso.";
+//    } catch (Exception e) {
+//        throw new RuntimeException("Não possivel deletar a vaga informada.");
+//    }
 }
