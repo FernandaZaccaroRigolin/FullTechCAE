@@ -36,7 +36,7 @@ public class ApiApartamentoController {
 		try {
 			return new ResponseEntity<Object>(apartamentoService.buscarApartamento(id), HttpStatus.CREATED);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}			
 		
 	}
@@ -46,7 +46,7 @@ public class ApiApartamentoController {
 		try {
 			return new ResponseEntity<Object>(apartamentoService.incluirApartamento(dados), HttpStatus.CREATED);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}
 
@@ -54,10 +54,10 @@ public class ApiApartamentoController {
 	public ResponseEntity<String> alterarApartamento(@RequestBody Map<String, String> dados, @PathVariable String id) {
 		
 		try {
-			return new ResponseEntity<String>(apartamentoService.alterarApartamento(dados, id), HttpStatus.CREATED);
+			return new ResponseEntity<String>(apartamentoService.alterarApartamento(dados, id), HttpStatus.ACCEPTED);
 			
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}			
 
@@ -66,7 +66,7 @@ public class ApiApartamentoController {
 		try {
 			return new ResponseEntity<String>(apartamentoService.removerApartamento(id), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}			
 	}
 }

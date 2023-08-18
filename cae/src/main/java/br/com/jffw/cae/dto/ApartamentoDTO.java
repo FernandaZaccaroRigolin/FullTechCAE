@@ -10,7 +10,7 @@ public class ApartamentoDTO {
 		this.setId(id);
 		this.setNumero(numero);
 		this.setBloco(bloco);
-		this.setQndvagas(id);
+		this.setQndvagas(qndvagas);
 	}
 	public int getId() {
 		return id;

@@ -30,6 +30,9 @@ public class UsuarioService {
 	public  UsuarioDTO loginUsuario(Map<String, String> dados) {
 		String email = dados.get("email");
 		String senha = dados.get("senha");
+		if((email.isBlank()) || (senha.isBlank())) {
+			throw new NullPointerException("O email e a senha devem ser informados.");
+		}
 		UsuarioDTO usuario = usuarioRepository.getUsuarioDTOByEmailSenha(email, senha);
 		
 		if (Optional.ofNullable(usuario).isEmpty()){
@@ -45,6 +48,10 @@ public class UsuarioService {
 		String email = dados.get("email");
 		String senha = dados.get("senha");
 		String nivelAcesso = dados.get("nivelacesso");
+		if((nome.isBlank()) || (email.isBlank()) ||(senha.isBlank())||(nivelAcesso.isBlank())  ) {
+			throw new NullPointerException("O nome, email, senha e nivel de acesso devem ser informados.");
+		}		
+		
 		Date dtCadastro = new Date();
 		
 		Optional<Usuario> usu = usuarioRepository.findByEmail(email);
@@ -71,11 +78,14 @@ public class UsuarioService {
 		String senha = dados.get("senha");
 		String nivelAcesso = dados.get("nivelacesso");
 		
+		if((nome.isBlank()) || (email.isBlank()) ||(senha.isBlank())||(nivelAcesso.isBlank())  ) {
+			throw new NullPointerException("O nome, email, senha e nivel de acesso devem ser informados.");
+		}	
 		
-		Usuario usuario = usuarioRepository.getReferenceById(Integer.parseInt(idUsuario));
+		Usuario usuario = usuarioRepository.findById(Integer.parseInt(idUsuario)).orElse(null);
 		
 		if (Optional.ofNullable(usuario).isEmpty()){
-			throw new RuntimeException("Usuário não localizado.");
+			throw new NullPointerException("Usuário não localizado.");
 		}
 		
 		if(!senha.equals(usuario.getSenha())) {
@@ -97,6 +107,10 @@ public class UsuarioService {
 		String senhaAtual = dados.get("senhaAtual");
 		String senhaNova = dados.get("senhaNova");
 		
+		if((email.isBlank()) || (senhaAtual.isBlank()) ||(senhaNova.isBlank())){
+			throw new NullPointerException("O email e senha devem ser informados.");
+		}			
+		
 		UsuarioDTO usu = usuarioRepository.getUsuarioDTOByEmailSenha(email, senhaAtual);
 		
 		if (!Optional.ofNullable(usu).isEmpty()){
@@ -115,6 +129,12 @@ public class UsuarioService {
 	}		
 	
 	public String removerUsuario(String idUsuario) {
+		
+		Usuario usuario = usuarioRepository.findById(Integer.parseInt(idUsuario)).orElse(null);
+		if (Optional.ofNullable(usuario).isEmpty()){
+			throw new NullPointerException("Usuário não localizado.");
+		}		
+		
 		usuarioRepository.deleteById(Integer.parseInt(idUsuario));
 		return "Usuário removido com sucesso";
 	}	

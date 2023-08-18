@@ -37,7 +37,7 @@ public class ApiUsuarioController {
 		try {
 			return new ResponseEntity<Object>(usuarioService.loginUsuario(dados), HttpStatus.CREATED);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}		
 	}
 	
@@ -47,7 +47,7 @@ public class ApiUsuarioController {
 			return new ResponseEntity<Object>(usuarioService.incluirUsuario(dados), HttpStatus.CREATED);
 			
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}
 	
@@ -57,7 +57,7 @@ public class ApiUsuarioController {
 			return new ResponseEntity<String>(usuarioService.alterarUsuario(dados, id), HttpStatus.CREATED);
 			
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}		
 
@@ -66,7 +66,7 @@ public class ApiUsuarioController {
 		try {
 			return new ResponseEntity<String>(usuarioService.alterarSenhaUsuario(dados), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}		
 	}	
 
@@ -75,7 +75,7 @@ public class ApiUsuarioController {
 		try {
 			return new ResponseEntity<String>(usuarioService.removerUsuario(id), HttpStatus.ACCEPTED);
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.toString());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}			
 	}
 

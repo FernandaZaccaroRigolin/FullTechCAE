@@ -25,10 +25,11 @@ public class ApartamentoService {
 		return apartamentos;
 	}
 	
-	public ApartamentoDTO buscarApartamento(String id) {
-		Apartamento apartamento = apartamentoRepository.getReferenceById(Integer.parseInt(id));
+	public ApartamentoDTO buscarApartamento(String idApartamento) {
+		Apartamento apartamento = apartamentoRepository.findById(Integer.parseInt(idApartamento)).orElse(null);
+		
 		if (Optional.ofNullable(apartamento).isEmpty()){
-			throw new RuntimeException("Apartamento não localizado");
+			throw new NullPointerException("Apartamento não localizado.");
 		}
 		return new ApartamentoDTO(
 				apartamento.getId(), 
@@ -41,6 +42,10 @@ public class ApartamentoService {
 		String numero = dados.get("numero");
 		String bloco = dados.get("bloco");
 		int qndVagas = Integer.parseInt(dados.get("qndvagas"));
+		
+		if((numero.isBlank()) || (bloco.isBlank())) {
+			throw new NullPointerException("O numero e bloco devem ser informados.");
+		}			
 
 		
 		Apartamento ap = apartamentoRepository.findByNumero(numero);
@@ -63,6 +68,11 @@ public class ApartamentoService {
 		String numero = dados.get("numero");
 		String bloco = dados.get("bloco");
 		int qndVagas = Integer.parseInt(dados.get("qndvagas"));
+		
+		if((numero.isBlank()) || (bloco.isBlank())) {
+			throw new NullPointerException("O numero e bloco devem ser informados.");
+		}			
+
 
 		Apartamento apartamento = apartamentoRepository.getReferenceById(Integer.parseInt(idApartamento));
 		if (Optional.ofNullable(apartamento).isEmpty()){
@@ -88,6 +98,11 @@ public class ApartamentoService {
 	}
 
 	public String removerApartamento(String idApartamento) {
+		Apartamento apartamento = apartamentoRepository.findById(Integer.parseInt(idApartamento)).orElse(null);
+		
+		if (Optional.ofNullable(apartamento).isEmpty()){
+			throw new NullPointerException("Apartamento não localizado.");
+		}		
 		apartamentoRepository.deleteById(Integer.parseInt(idApartamento));
 		return"Apartamento removido com sucesso";
 	}
