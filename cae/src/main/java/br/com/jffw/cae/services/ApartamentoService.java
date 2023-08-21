@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.jffw.cae.dto.ApartamentoDTO;
 import br.com.jffw.cae.models.Apartamento;
+import br.com.jffw.cae.models.Usuario;
 import br.com.jffw.cae.repository.ApartamentoRepository;
 
 @Service
@@ -48,10 +49,10 @@ public class ApartamentoService {
 		}			
 
 		
-		Apartamento ap = apartamentoRepository.findByNumero(numero);
+		Apartamento ap = apartamentoRepository.findByNumeroAndBloco(numero, bloco);
 		
 		if (!Optional.ofNullable(ap).isEmpty()){	
-			throw new RuntimeException("Este apartamento já existe");
+			throw new RuntimeException("Este apartamento [numero, bloco] já existe");
 		}		
 		
 		Apartamento apartamento = new Apartamento();
@@ -74,16 +75,17 @@ public class ApartamentoService {
 		}			
 
 
-		Apartamento apartamento = apartamentoRepository.getReferenceById(Integer.parseInt(idApartamento));
+		Apartamento apartamento = apartamentoRepository.findById(Integer.parseInt(idApartamento)).orElse(null);
+		
 		if (Optional.ofNullable(apartamento).isEmpty()){
 			throw new RuntimeException("Apartamento não localizado");
 		}		
 		
-		if(!numero.equals(apartamento.getNumero())) {
-			Apartamento ap = apartamentoRepository.findByNumero(numero);
+		if(!numero.equals(apartamento.getNumero()) || !bloco.equals(apartamento.getBloco())) {
+			Apartamento ap = apartamentoRepository.findByNumeroAndBloco(numero, bloco);
 			
 			if (!Optional.ofNullable(ap).isEmpty()){	
-				throw new RuntimeException("Este número de apartamento já foi cadastrado.");
+				throw new RuntimeException("Este [número, bloco] de apartamento já foi cadastrado.");
 			}		
 		}
 		

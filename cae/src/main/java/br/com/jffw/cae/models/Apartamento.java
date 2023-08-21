@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "tb_apartamentos")
 public class Apartamento {
@@ -32,11 +30,9 @@ public class Apartamento {
     @Column(name = "QNDVAGAS")
     private int qndVagas;
     
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "apartamento")
     private List<Proprietario> proprietarios;    
   
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "apartamento")
     private List<Vaga> vagas;
     

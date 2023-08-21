@@ -8,6 +8,6 @@ import br.com.jffw.cae.models.Apartamento;
 
 public interface ApartamentoRepository extends JpaRepository<Apartamento, Integer>  {
 
-	Apartamento findByNumero(String numero);
+	Apartamento findByNumeroAndBloco(String numero, String Bloco);
 
 }

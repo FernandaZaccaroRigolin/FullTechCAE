@@ -20,6 +20,32 @@ public class ProprietarioListDTO {
     private String numeroApartamento;
     private String blocoApartamento;
     private int qndVagasApartamento;
+    
+    public ProprietarioListDTO () { }
+    
+    public ProprietarioListDTO(String cpf, 
+    		String nome, 
+    		String telefone, 
+    		String email, 
+    		Integer apartamento, 
+    		Date dtNascimento,
+    		String numeroApartamento,
+    		String blocoApartamento,
+    		int qndVagasApartamento
+    		) {
+    	
+    	this.setCpf(cpf);
+    	this.setNome(nome);
+    	this.setTelefone(telefone);
+    	this.setEmail(email);
+    	this.setApartamento(apartamento);
+    	this.setDtNascimento(dtNascimento);
+    	this.setDtNascimentoFormatted(this.getDtNascimentoFormatted());
+    	this.setNumeroApartamento(numeroApartamento);
+    	this.setBlocoApartamento(blocoApartamento);
+    	this.setQndVagasApartamento(qndVagasApartamento);
+    	   	
+    }
 
     public String getCpf() {
         return cpf;

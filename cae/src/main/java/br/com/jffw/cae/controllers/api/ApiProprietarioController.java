@@ -44,7 +44,7 @@ public class ApiProprietarioController {
 	@PostMapping("/")
 	public ResponseEntity<?> incluirProprietario(@RequestBody ProprietarioDTO dto) {
 		try {
-			Proprietario proprietario = proprietarioService.incluirProprietario(dto);
+			ProprietarioListDTO proprietario = proprietarioService.incluirProprietario(dto);
 			return ResponseEntity.ok(proprietario);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Erro ao incluir proprietário: " + e.getMessage());
