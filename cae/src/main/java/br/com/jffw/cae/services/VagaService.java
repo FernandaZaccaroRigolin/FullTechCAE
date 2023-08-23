@@ -28,9 +28,19 @@ public class VagaService {
 	public List<VagaDTO> listarVagasDTO() {
 		List<VagaDTO> vagas = new ArrayList<VagaDTO>();
 		vagaRepository.findAll().forEach(
-				a -> vagas.add(new VagaDTO(a.getId(),a.getBloco(), a.getNumero(), a.getApartamento().getId())));
+				a -> vagas.add(new VagaDTO(a.getId(), a.getBloco(), a.getNumero(), a.getApartamento().getId())));
 
 		return vagas;
+	}
+	
+	public VagaDTO buscarVaga(String idVaga) {
+		Vaga vaga = vagaRepository.findById(Integer.parseInt(idVaga)).orElse(null);
+		
+		if (Optional.ofNullable(vaga).isEmpty()){
+			throw new RuntimeException("Vaga não localizada.");
+		}
+		
+		return new VagaDTO(vaga.getId(), vaga.getBloco(), vaga.getNumero(), vaga.getApartamento().getId());
 	}
 	
 	public VagaDTO incluirVaga(Map<String, String> dados) throws ParseException {
@@ -40,18 +50,36 @@ public class VagaService {
 	    Vaga vaga = new Vaga();
 	    vaga.setBloco(bloco);
 	    vaga.setNumero(numero);
-	    Integer idApartamento = Integer.parseInt(dados.get("idAP"));
-	        
+	    
+	    Integer idApartamento;
+	    try {
+	    	Integer idAx = Integer.parseInt(dados.get("idAP"));
+	    	idApartamento = idAx;
+		} catch (Exception e) {
+			throw new RuntimeException("Por favor, informe o apartamento.");
+		}
+	   
 	    Apartamento ap = apartamentoRepository.getReferenceById(idApartamento);
 		if (Optional.ofNullable(ap).isEmpty()){
 			throw new RuntimeException("Por favor, informe o apartamento.");
-		} 
+		}
 		
-		int qndVagas = ap.getQndVagas(); 
-		List<Vaga> listVagas = vagaRepository.findByVaga(idApartamento); 
-		int numVagas = listVagas.size(); 
-		if(qndVagas <= numVagas) {
-			throw new RuntimeException("Quantidade de vagas foi excedida.");	
+		boolean vagaExcedida = false;
+		
+		try {
+			int qndVagas = ap.getQndVagas(); 
+			List<Vaga> listVagas = vagaRepository.findByVaga(idApartamento); 
+			int numVagas = listVagas.size(); 
+			if(qndVagas <= numVagas) {
+				vagaExcedida = true;	
+				throw new RuntimeException();
+			}
+		} catch (Exception e) {
+			if(vagaExcedida) {
+				throw new RuntimeException("Quantidade de vagas foi excedida.");	
+			} else {
+				throw new RuntimeException("Apartamento não encontrado.");	
+			}
 		}
 		
         Vaga numeroVaga = vagaRepository.findByNumero(numero);
@@ -83,21 +111,21 @@ public class VagaService {
 
 		Vaga vaga = vagaRepository.getReferenceById(Integer.parseInt(idVaga));
 		if (Optional.ofNullable(vaga).isEmpty()){
-			throw new RuntimeException("Vaga não localizada.");
+			return "Vaga não localizada.";
 		}	
 		
 		int qndVagas = ap.getQndVagas(); 
 		List<Vaga> listVagas = vagaRepository.findByVagaAlterar(idApartamento, vaga.getId()); 
 		int numVagas = listVagas.size(); 
 		if(qndVagas <= numVagas) {
-			throw new RuntimeException("Quantidade de vagas foi excedida.");	
+			return "Quantidade de vagas foi excedida.";	
 		}
 		
 		if(!numero.equals(vaga.getNumero())) {
 			Vaga vg = vagaRepository.findByNumero(numero);
 			
 			if (!Optional.ofNullable(vg).isEmpty()){	
-				throw new RuntimeException("Este número de vaga já foi cadastrada.");
+				return "Este número de vaga já foi cadastrada.";
 			}		
 		}
 		
@@ -112,9 +140,9 @@ public class VagaService {
 	public String remover(String id) {
 		try {
 			vagaRepository.deleteById(Integer.parseInt(id));
-			return "Vaga deletada com sucesso.";
+			return "Vaga removida com sucesso.";
 		} catch (Exception e) {
-			throw new RuntimeException("Não possivel deletar a vaga informada.");
+			return "Não foi possivel remover a vaga informada.";
 		}
 	}
 }
