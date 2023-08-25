@@ -31,6 +31,7 @@ public class ApiApartamentoController {
 		return apartamentoService.listarApartamentosDTO();
 	}
 
+	@CrossOrigin
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> buscarApartamento(@PathVariable String id) {
 		try {
@@ -41,6 +42,7 @@ public class ApiApartamentoController {
 		
 	}
 	
+	@CrossOrigin
 	@PostMapping("/")
 	public ResponseEntity<Object> incluirApartamento(@RequestBody Map<String, String> dados) {
 		try {
@@ -49,7 +51,8 @@ public class ApiApartamentoController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}
-
+	
+	@CrossOrigin
 	@PutMapping("/{id}")
 	public ResponseEntity<String> alterarApartamento(@RequestBody Map<String, String> dados, @PathVariable String id) {
 		
@@ -60,7 +63,8 @@ public class ApiApartamentoController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}			
-
+	
+	@CrossOrigin
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteUsuario(@PathVariable String id) {
 		try {

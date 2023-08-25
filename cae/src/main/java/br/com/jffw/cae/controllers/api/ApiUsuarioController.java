@@ -32,6 +32,7 @@ public class ApiUsuarioController {
 		return usuarioService.listarUsuariosDTO();
 	}
 
+	@CrossOrigin
 	@PostMapping("/login")
 	public ResponseEntity<Object> buscarUsuario(@RequestBody Map<String, String> dados) {
 		try {
@@ -41,6 +42,7 @@ public class ApiUsuarioController {
 		}		
 	}
 	
+	@CrossOrigin
 	@PostMapping("/")
 	public ResponseEntity<Object> incluirUsuario(@RequestBody Map<String, String> dados) {
 		try {
@@ -51,6 +53,7 @@ public class ApiUsuarioController {
 		}
 	}
 	
+	@CrossOrigin
 	@PutMapping("/{id}")
 	public ResponseEntity<String> alterarUsuario(@RequestBody Map<String, String> dados, @PathVariable String id) {
 		try {
@@ -60,7 +63,8 @@ public class ApiUsuarioController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}		
-
+	
+	@CrossOrigin
 	@PutMapping("/alterarSenha")
 	public ResponseEntity<String> alterarSenhaUsuario(@RequestBody Map<String, String> dados) {
 		try {
@@ -69,7 +73,8 @@ public class ApiUsuarioController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}		
 	}	
-
+	
+	@CrossOrigin
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteUsuario(@PathVariable String id) {
 		try {
@@ -78,5 +83,4 @@ public class ApiUsuarioController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}			
 	}
-
 }

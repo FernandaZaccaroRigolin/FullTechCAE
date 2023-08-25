@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +26,14 @@ public class ApiProprietarioController {
 
 	@Autowired
 	ProprietarioService proprietarioService;
-
+	
+	@CrossOrigin
 	@GetMapping("/")
 	public List<ProprietarioListDTO> listarTodosDTO() {
 		return proprietarioService.listarProprietariosDTO();
 	}
-
+	
+	@CrossOrigin
 	@GetMapping("/{cpf}")
 	public ResponseEntity<?> buscarProprietarioPorCpf(@PathVariable String cpf) {
 		try {
@@ -41,6 +44,7 @@ public class ApiProprietarioController {
 		}
 	}
 
+	@CrossOrigin
 	@PostMapping("/")
 	public ResponseEntity<?> incluirProprietario(@RequestBody ProprietarioDTO dto) {
 		try {
@@ -51,6 +55,7 @@ public class ApiProprietarioController {
 		}
 	}
 
+	@CrossOrigin
 	@PutMapping("/{cpf}")
 	public ResponseEntity<?> alterarProprietario(@RequestBody ProprietarioDTO dto, @PathVariable String cpf) {
 	    try {
@@ -61,7 +66,7 @@ public class ApiProprietarioController {
 	    }
 	}
 
-
+	@CrossOrigin
 	@DeleteMapping("/{cpf}")
 	public ResponseEntity<String> deleteProprietario(@PathVariable String cpf) {
 		try {

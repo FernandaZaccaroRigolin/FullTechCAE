@@ -25,11 +25,13 @@ public class ApiVagaController {
 	@Autowired
 	private VagaService vagaService;
 	
-	@CrossOrigin @GetMapping("/")
+	@CrossOrigin 
+	@GetMapping("/")
 	public List<VagaDTO> listarVagasDTO() {
 		return vagaService.listarVagasDTO();
 	}
 	
+	@CrossOrigin
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarVagaPorId(@PathVariable String id) {
 		try {
@@ -40,6 +42,7 @@ public class ApiVagaController {
 		}
 	}
 	
+	@CrossOrigin
 	@PostMapping("/")
 	public ResponseEntity<?> incluirVaga(@RequestBody Map<String, String> dados) {
 	    try {
@@ -52,6 +55,7 @@ public class ApiVagaController {
 	    }
 	}
 	
+	@CrossOrigin
 	@PutMapping("/{id}")
 	public ResponseEntity<String> alterarVaga(@RequestBody Map<String, String> dados, @PathVariable String id) {
 		try {
@@ -62,6 +66,7 @@ public class ApiVagaController {
 		}
 	}	
 	
+	@CrossOrigin
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> removerVaga(@PathVariable String id){
 		try {
