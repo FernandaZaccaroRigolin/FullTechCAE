@@ -6,16 +6,26 @@ public class VagaDTO {
 	private String bloco;
 	private String numero;
 	private Integer apartamento;
+	private String numeroApt;
 	
 	public VagaDTO() { }
 	
-	public VagaDTO(int id, String bloco, String numero, Integer apartamento) {
+	public VagaDTO(int id, String bloco, String numero, Integer apartamento, String numeroApt) {
 		this.setId(id);
 		this.setBloco(bloco);
 		this.setNumero(numero);
 		this.setApartamento(apartamento);
+		this.setNumeroApt(numeroApt);
 	}
 	
+	public String getNumeroApt() {
+		return numeroApt;
+	}
+
+	public void setNumeroApt(String numeroApt) {
+		this.numeroApt = numeroApt;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -27,7 +27,7 @@ public class VagaService {
 	public List<VagaDTO> listarVagasDTO() {
 		List<VagaDTO> vagas = new ArrayList<VagaDTO>();
 		vagaRepository.findAll().forEach(
-				a -> vagas.add(new VagaDTO(a.getId(), a.getBloco(), a.getNumero(), a.getApartamento().getId())));
+				a -> vagas.add(new VagaDTO(a.getId(), a.getBloco(), a.getNumero(), a.getApartamento().getId(), a.getApartamento().getNumero())));
 
 		return vagas;
 	}
@@ -39,7 +39,7 @@ public class VagaService {
 			throw new RuntimeException("Vaga não localizada.");
 		}
 		
-		return new VagaDTO(vaga.getId(), vaga.getBloco(), vaga.getNumero(), vaga.getApartamento().getId());
+		return new VagaDTO(vaga.getId(), vaga.getBloco(), vaga.getNumero(), vaga.getApartamento().getId(), vaga.getApartamento().getNumero());
 	}
 	
 	public VagaDTO incluirVaga(Map<String, String> dados) throws ParseException {
@@ -98,14 +98,14 @@ public class VagaService {
 	    }
 
 	    vagaRepository.save(vaga);
-	    return new VagaDTO(vaga.getId(), vaga.getBloco(), vaga.getNumero(), vaga.getApartamento().getId());
+	    return new VagaDTO(vaga.getId(), vaga.getBloco(), vaga.getNumero(), vaga.getApartamento().getId(), vaga.getApartamento().getNumero());
 	}
 	
 	public String alterarVaga(Map<String, String> dados, String idVaga) {
 		String numero = dados.get("numero");
 		String bloco = dados.get("bloco");
 		
-		Integer idApartamento = Integer.parseInt(dados.get("idAP"));
+		Integer idApartamento = Integer.parseInt(dados.get("apartamento"));
 	    Apartamento ap = apartamentoRepository.getReferenceById(idApartamento);
 
 		Vaga vaga = vagaRepository.getReferenceById(Integer.parseInt(idVaga));
