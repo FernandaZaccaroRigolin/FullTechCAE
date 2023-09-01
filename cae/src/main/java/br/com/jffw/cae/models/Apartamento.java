@@ -37,6 +37,7 @@ public class Apartamento {
     private List<Vaga> vagas;
     
     
+    
 	public int getId() {
 		return id;
 	}

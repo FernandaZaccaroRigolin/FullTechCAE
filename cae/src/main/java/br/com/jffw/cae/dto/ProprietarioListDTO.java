@@ -11,11 +11,12 @@ public class ProprietarioListDTO {
     private String cpf;
     private String nome;
     private String telefone;
-    @JsonIgnore
+    
     private Date dtNascimento;
     private String email;
     private Integer apartamento;
-    @JsonProperty("dtNascimento")
+    //@JsonProperty("dtNascimento")
+    @JsonIgnore
     private String dtNascimentoFormatted;
     private String numeroApartamento;
     private String blocoApartamento;

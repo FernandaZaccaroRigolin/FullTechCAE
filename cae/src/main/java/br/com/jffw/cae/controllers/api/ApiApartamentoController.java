@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.jffw.cae.dto.ApartamentoDTO;
+import br.com.jffw.cae.dto.ApartamentoProprietarioListDTO;
 import br.com.jffw.cae.services.ApartamentoService;
 
 @RestController
@@ -30,6 +31,12 @@ public class ApiApartamentoController {
 	public List<ApartamentoDTO> listarApartamentosDTO() {
 		return apartamentoService.listarApartamentosDTO();
 	}
+	
+	@CrossOrigin
+	@GetMapping("/geral")
+	public List<ApartamentoProprietarioListDTO> listarApartamentosProprietariosDTO() {
+		return apartamentoService.listarApartamentosProrietariosDTO();
+	}	
 
 	@CrossOrigin
 	@GetMapping("/{id}")

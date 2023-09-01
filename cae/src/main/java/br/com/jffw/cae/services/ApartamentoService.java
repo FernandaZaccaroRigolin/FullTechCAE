@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.jffw.cae.dto.ApartamentoDTO;
+import br.com.jffw.cae.dto.ApartamentoProprietarioListDTO;
 import br.com.jffw.cae.models.Apartamento;
 import br.com.jffw.cae.models.Usuario;
 import br.com.jffw.cae.repository.ApartamentoRepository;
@@ -74,14 +75,13 @@ public class ApartamentoService {
 			throw new NullPointerException("O numero e bloco devem ser informados.");
 		}			
 
-
 		Apartamento apartamento = apartamentoRepository.findById(Integer.parseInt(idApartamento)).orElse(null);
 		
 		if (Optional.ofNullable(apartamento).isEmpty()){
 			throw new RuntimeException("Apartamento não localizado");
 		}		
-		
-		if(!numero.equals(apartamento.getNumero()) || !bloco.equals(apartamento.getBloco())) {
+	
+		if(!numero.toUpperCase().equals(apartamento.getNumero().toUpperCase()) || !bloco.toUpperCase().equals(apartamento.getBloco().toUpperCase())) {
 			Apartamento ap = apartamentoRepository.findByNumeroAndBloco(numero, bloco);
 			
 			if (!Optional.ofNullable(ap).isEmpty()){	
@@ -108,4 +108,10 @@ public class ApartamentoService {
 		apartamentoRepository.deleteById(Integer.parseInt(idApartamento));
 		return"Apartamento removido com sucesso";
 	}
+	
+	public List<ApartamentoProprietarioListDTO> listarApartamentosProrietariosDTO() {
+		List<ApartamentoProprietarioListDTO> apartamentos = apartamentoRepository.findApartamentoProprietario();
+		
+		return apartamentos;
+	}	
 }
