@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.jffw.cae.dto.VagaDTO;
+import br.com.jffw.cae.dto.VagaVeiculoListDTO;
 import br.com.jffw.cae.models.Apartamento;
 import br.com.jffw.cae.models.Vaga;
 import br.com.jffw.cae.repository.ApartamentoRepository;
@@ -144,4 +145,16 @@ public class VagaService {
 			return "Não foi possivel remover a vaga informada.";
 		}
 	}
+	
+	public List<VagaVeiculoListDTO> listarVagasVeiculosDTO() {
+		List<VagaVeiculoListDTO> vagas = vagaRepository.findVagaVeiculo();
+		
+		return vagas;
+	}		
+	
+	public List<VagaVeiculoListDTO> listarVagasVeiculosDTObyApt(String apt) {
+		List<VagaVeiculoListDTO> vagas = vagaRepository.findVagaVeiculoByApt(Integer.parseInt(apt));
+		
+		return vagas;
+	}		
 }

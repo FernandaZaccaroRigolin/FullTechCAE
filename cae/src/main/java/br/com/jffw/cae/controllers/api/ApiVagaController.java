@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.jffw.cae.dto.ApartamentoProprietarioListDTO;
 import br.com.jffw.cae.dto.VagaDTO;
+import br.com.jffw.cae.dto.VagaVeiculoListDTO;
 import br.com.jffw.cae.services.VagaService;
 
 @RestController @RequestMapping("/api/vagas")
@@ -75,4 +77,39 @@ public class ApiVagaController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		}
 	}
+
+	@CrossOrigin
+	@GetMapping(path = {"/geral", "/geral/{apt}"})
+	public List<VagaVeiculoListDTO> listarVagasVeiculosDTO(@PathVariable(name = "apt", required = false) String apt) {
+		if(apt != null) {
+			return vagaService.listarVagasVeiculosDTObyApt(apt);
+		} else {
+			return vagaService.listarVagasVeiculosDTO();
+		}		
+		
+		
+		
+		
+	}
+	
+	
+//	@GetMapping(path = {"/lista", "/lista/{cpf}"})
+//	public ModelAndView listarPedidos(@PathVariable(name = "cpf", required = false) String cpf) {
+//		try {
+//			List<ClientePedidosDTO> pedidos;
+//			if(cpf != null) {
+//				pedidos = pedidoRepository.getClientePedidosDTOByCpf(cpf);
+//			} else {
+//				pedidos = pedidoRepository.getClientePedidosDTO();
+//			}
+//			
+//			return new ModelAndView("pedidos/listaPedidos", "lista_pedidos", pedidos);
+//		} catch (Exception e) {
+//			return new ModelAndView("erro", "msg_erro", e.toString());
+//		}
+//	}	
+	
+	
+	
+	
 }

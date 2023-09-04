@@ -6,14 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.jffw.cae.dto.VagaVeiculosDTO;
 import br.com.jffw.cae.dto.VeiculoDTO;
-import br.com.jffw.cae.models.Proprietario;
 import br.com.jffw.cae.models.Vaga;
 import br.com.jffw.cae.models.Veiculo;
 import br.com.jffw.cae.repository.VagaRepository;
@@ -27,38 +24,26 @@ public class VeiculoService {
 	@Autowired
 	private VagaRepository vagaRepository;
 
-//    public List<VagaVeiculoDTO > listarVeiculos(String id) {
-//        return veiculoRepository.getVagaVeiculoDTOById(id);
-//    }
-//    
-
-	public List<Veiculo> listarVeiculos() {
-		return veiculoRepository.findAll();
-	}
-
 	public VeiculoDTO incluirVeiculo(Map<String, String> dados) throws ParseException {
 
 		String placa = dados.get("placa");
 		String cor = dados.get("cor");
 		String modelo = dados.get("modelo");
+
 		int idVaga = Integer.parseInt(dados.get("idVaga"));
-		
-	    Vaga existingVaga = vagaRepository.findById(idVaga).orElse(null);
-	    if (existingVaga == null) {
-	        throw new IllegalArgumentException("Vaga não localizada.");
-	    }
-	
+		Vaga v = vagaRepository.getReferenceById(idVaga);
+
 		if ((placa.isBlank()) || (cor.isBlank()) || (modelo.isBlank())) {
 			throw new NullPointerException("A placa, cor e modelo devem ser informados.");
 		}
-		
+
 		Veiculo vc = veiculoRepository.findByPlacaAndCorAndModelo(placa, cor, modelo);
 
 		if (!Optional.ofNullable(vc).isEmpty()) {
 			throw new RuntimeException("Este veiculo " + placa + " já existe");
 		}
 
-		List<Veiculo> veiculosdaVaga = existingVaga.getVeiculos();
+		List<Veiculo> veiculosdaVaga = v.getVeiculos();
 		if (!veiculosdaVaga.isEmpty()) {
 			throw new IllegalArgumentException("A vaga já está vinculada a outro veículo.");
 		}
@@ -68,9 +53,9 @@ public class VeiculoService {
 			throw new IllegalArgumentException("A vaga com o ID fornecido não existe.");
 		}
 
-		// criando o objeto veiculo
+// criando o objeto veiculo
 		Veiculo veiculo = new Veiculo();
-		veiculo.setVaga(existingVaga);
+		veiculo.setVaga(v);
 		veiculo.setPlaca(placa);
 		veiculo.setCor(cor);
 		veiculo.setModelo(modelo);
@@ -82,18 +67,16 @@ public class VeiculoService {
 	}
 
 	public String alterarVeiculo(Map<String, String> dados, String placa) {
-        Veiculo veiculo = veiculoRepository.findById(placa)
-                .orElseThrow(() -> new EntityNotFoundException("O veículo a ser alterado não existe."));
 
-		
+		String novaPlaca = dados.get("placa");
 		String cor = dados.get("cor");
 		String modelo = dados.get("modelo");
 		int idVaga = Integer.parseInt(dados.get("idVaga"));
 
-//		Optional<Veiculo> veiculoOptional = veiculoRepository.findById(placa);
-//		if (!veiculoOptional.isPresent()) {
-//			throw new IllegalArgumentException("O veículo com a placa fornecida não existe.");
-//		}
+		Optional<Veiculo> veiculoOptional = veiculoRepository.findById(placa);
+		if (!veiculoOptional.isPresent()) {
+			throw new IllegalArgumentException("O veículo com a placa fornecida não existe.");
+		}
 
 		Optional<Vaga> vagaOptional = vagaRepository.findById(idVaga);
 		if (!vagaOptional.isPresent()) {
@@ -104,13 +87,8 @@ public class VeiculoService {
 			throw new NullPointerException("A cor e modelo devem ser informados.");
 		}
 
-		
-        List<Veiculo> veiculosVinculados = veiculoRepository
-                .findByVagaAndNotPlaca(idVaga, placa);
-        if (!veiculosVinculados.isEmpty()) {
-            throw new IllegalArgumentException("A vaga já está vinculada a outro veículo.");
-        }
-		
+		Veiculo veiculo = veiculoOptional.get();
+		veiculo.setPlaca(novaPlaca);
 		veiculo.setCor(cor);
 		veiculo.setModelo(modelo);
 		veiculo.setVaga(vagaOptional.get());
@@ -129,11 +107,6 @@ public class VeiculoService {
 		}
 	}
 
-	public List<VagaVeiculosDTO> listarVeiculos1() {
-		return veiculoRepository.getVagaVeiculoDTO();
-
-	}
-
 	public VagaVeiculosDTO listarVeiculosPorPlaca(String placa) {
 		Veiculo veiculo = veiculoRepository.findById(placa)
 				.orElseThrow(() -> new IllegalArgumentException("Veículo não encontrado"));
@@ -144,7 +117,7 @@ public class VeiculoService {
 
 		Vaga vaga = veiculo.getVaga();
 		if (vaga != null) {
-			dto.setVaga(vaga.getId());
+			dto.setIdVaga(vaga.getId());
 			dto.setNumero(vaga.getNumero());
 			dto.setBloco(vaga.getBloco());
 		}
@@ -152,7 +125,7 @@ public class VeiculoService {
 		return dto;
 	}
 
-	public List<VagaVeiculosDTO> listarVeiculosDTO() {
+	public List<VagaVeiculosDTO> listarVeiculos() {
 		List<Veiculo> veiculos = veiculoRepository.findAll();
 		List<VagaVeiculosDTO> dtos = new ArrayList<>();
 
@@ -164,7 +137,7 @@ public class VeiculoService {
 
 			Vaga vaga = veiculo.getVaga();
 			if (vaga != null) {
-				dto.setVaga(vaga.getId());
+				dto.setIdVaga(vaga.getId());
 				dto.setNumero(vaga.getNumero());
 				dto.setBloco(vaga.getBloco());
 			}

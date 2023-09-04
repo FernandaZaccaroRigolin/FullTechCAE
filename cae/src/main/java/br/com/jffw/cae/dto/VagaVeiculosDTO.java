@@ -4,24 +4,23 @@ public class VagaVeiculosDTO {
 	private String placa;
 	private String cor;
 	private String modelo;
-	private int Vaga;
+	private Integer idVaga;
 	private String bloco;
 	private String numero;
+	public VagaVeiculosDTO() {}
 
-	public VagaVeiculosDTO() {
-	}
-
-	public VagaVeiculosDTO(String placa, String cor, String modelo, int vaga, String bloco, String numero) {
+	public VagaVeiculosDTO(String placa, String cor, String modelo, int idVaga, String bloco, String numero) {
 		this.setPlaca(placa);
 		this.setCor(cor);
 		this.setModelo(modelo);
-		this.setVaga(vaga);
+		this.setIdVaga(idVaga);
 		this.setBloco(bloco);
 		this.setNumero(numero);
 	}
 
 	public String getPlaca() {
 		return placa;
+
 	}
 
 	public void setPlaca(String placa) {
@@ -44,12 +43,12 @@ public class VagaVeiculosDTO {
 		this.modelo = modelo;
 	}
 
-	public int getVaga() {
-		return Vaga;
+	public Integer getIdVaga() {
+		return idVaga;
 	}
 
-	public void setVaga(int vaga) {
-		Vaga = vaga;
+	public void setIdVaga(Integer idVaga) {
+		this.idVaga = idVaga;
 	}
 
 	public String getBloco() {
