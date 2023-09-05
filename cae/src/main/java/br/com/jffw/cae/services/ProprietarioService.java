@@ -83,50 +83,68 @@ public class ProprietarioService {
 		return dtos;
 	}
 
-	public ProprietarioListDTO incluirProprietario(ProprietarioDTO dto) throws ParseException {
-	    String cpf = dto.getCpf();
-	    Proprietario existingProprietario = proprietarioRepository.findById(cpf).orElse(null);
-	    if (existingProprietario != null) {
-	        throw new IllegalArgumentException("O proprietário já está cadastrado.");
-	    }
+	 public ProprietarioListDTO incluirProprietario(ProprietarioDTO dto) throws ParseException {
+	        String cpf = dto.getCpf();
 
-	    Proprietario proprietario = new Proprietario();
-	    proprietario.setCpf(cpf);
-	    proprietario.setNome(dto.getNome());
-	    proprietario.setTelefone(dto.getTelefone());
-	    proprietario.setDtNascimento(dto.getDtNascimento());
-	    proprietario.setEmail(dto.getEmail());
+	        if (cpf.length() != 11) {
+	            throw new IllegalArgumentException("CPF deve ter 11 dígitos.");
+	        }
 
-	    Integer idApartamento = dto.getApartamento();
-	    if (idApartamento != null) {
-	        Apartamento apartamento = apartamentoRepository.findById(idApartamento).orElse(null);
-	        if (apartamento == null) {
+	        if (isCPFTodosDigitosRepetidos(cpf)) {
+	            throw new IllegalArgumentException("CPF inválido.");
+	        }
+
+	        Proprietario existingProprietario = proprietarioRepository.findById(cpf).orElse(null);
+	        if (existingProprietario != null) {
+	            throw new IllegalArgumentException("O proprietário já está cadastrado.");
+	        }
+
+	        Proprietario proprietario = new Proprietario();
+	        proprietario.setCpf(cpf);
+	        proprietario.setNome(dto.getNome());
+	        proprietario.setTelefone(dto.getTelefone());
+	        proprietario.setDtNascimento(dto.getDtNascimento());
+	        proprietario.setEmail(dto.getEmail());
+
+	        Integer idApartamento = dto.getApartamento();
+	        if (idApartamento != null) {
+	            Apartamento apartamento = apartamentoRepository.findById(idApartamento).orElse(null);
+	            if (apartamento == null) {
+	                throw new IllegalArgumentException("O ID do apartamento é obrigatório.");
+	            }
+
+	            List<Proprietario> proprietariosDoApartamento = apartamento.getProprietarios();
+	            if (!proprietariosDoApartamento.isEmpty()) {
+	                throw new IllegalArgumentException("O apartamento já está vinculado a outro proprietário.");
+	            }
+
+	            proprietario.setApartamento(apartamento);
+	        } else {
 	            throw new IllegalArgumentException("O ID do apartamento é obrigatório.");
 	        }
 
-	        List<Proprietario> proprietariosDoApartamento = apartamento.getProprietarios();
-	        if (!proprietariosDoApartamento.isEmpty()) {
-	            throw new IllegalArgumentException("O apartamento já está vinculado a outro proprietário.");
-	        }
-
-	        proprietario.setApartamento(apartamento);
-	    } else {
-	        throw new IllegalArgumentException("O ID do apartamento é obrigatório.");
+	        proprietarioRepository.save(proprietario);
+	        return new ProprietarioListDTO(
+	                proprietario.getCpf(),
+	                proprietario.getNome(),
+	                proprietario.getTelefone(),
+	                proprietario.getEmail(),
+	                proprietario.getApartamento().getId(),
+	                proprietario.getDtNascimento(),
+	                proprietario.getApartamento().getNumero(),
+	                proprietario.getApartamento().getBloco(),
+	                proprietario.getApartamento().getQndVagas()
+	        );
 	    }
 
-	    proprietarioRepository.save(proprietario);
-	    return new ProprietarioListDTO(
-	    			proprietario.getCpf(),
-	    			proprietario.getNome(),
-	    			proprietario.getTelefone(),
-	    			proprietario.getEmail(),
-	    			proprietario.getApartamento().getId(),
-	    			proprietario.getDtNascimento(),
-	    			proprietario.getApartamento().getNumero(),
-	    			proprietario.getApartamento().getBloco(),
-	    			proprietario.getApartamento().getQndVagas()
-	    		);
-	}
+	    private boolean isCPFTodosDigitosRepetidos(String cpf) {
+	        for (int i = 0; i < cpf.length() - 1; i++) {
+	            if (cpf.charAt(i) != cpf.charAt(i + 1)) {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
 
 
 	public ResponseEntity<?> alterar(ProprietarioDTO dto, String cpf) {
