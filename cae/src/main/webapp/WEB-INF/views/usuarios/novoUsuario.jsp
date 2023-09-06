@@ -42,6 +42,25 @@
         margin: auto;
         max-width: 400px;
       }
+        .btnColor {
+        background-color: var(--bs-purple);
+        color: var(--bs-white);
+
+        /* border-color: var(--bs-purple); */
+      }    
+      
+	   .btnColor:hover {
+        color: var(--bs-purple);
+        background-color: var(--bs-white);
+        border: 2px solid var(--bs-purple);
+
+        /* border-color: var(--bs-purple); */
+      }   
+      
+      .strColor{
+        color: var(--bs-purple);
+      }
+           
     </style>
   </head>
   <body>
@@ -65,7 +84,7 @@
     </header>
 
     <div class="container borda conteudo-main">
-      <h2 class="text-primary text-center">Cadastro de Usu&aacute;rios</h2>
+      <h2 class="strColor text-center">Cadastro de Usu&aacute;rios</h2>
       <form action="/usuarios/novo" method="post">
         <div class="mb-3">
           <label class="form-label">Nome:</label>
@@ -92,7 +111,7 @@
             <option value="MORADOR">Morador</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">Incluir</button>
+        <button type="submit" class="btn btnColor">Incluir</button>
         <a href="/usuarios/lista" class="btn btn-secondary"
           >Voltar para a lista</a
         >
