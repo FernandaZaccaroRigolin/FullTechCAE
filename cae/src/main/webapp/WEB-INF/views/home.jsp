@@ -74,17 +74,24 @@
       class="component-header d-flex p-2 bd-highlight justify-content-between px-md-5 border"
     >
       <h1 class="text-left">Cae - Solutions</h1>
+      <input
+        type="hidden"
+        name="isLogged"
+        id="isLogged"
+        value="${usuLogado.isLogged}"
+      />
 
       <c:choose>
         <c:when test="${usuLogado.isLogged == true}">
           <!-- <input type="text" name="nome" value="${usuLogado.nome}" /> -->
-          <label>${usuLogado.nome}</label>
+          <label id="usuNome">Ol&aacute;, ${usuLogado.nome}</label>
           <a href="/" class="btn btn-lg align-middle btnlogin p-3 w-25"
             >Logout</a
           >
         </c:when>
         <c:when test="${usuLogado.isLogged == false}">
           <h6>Ol&aacute;, fa&ccedil;a o login!</h6>
+          <label id="usuNome"></label>
           <button
             type="button"
             class="btn btn-lg align-middle btnlogin p-3 w-25"
@@ -123,7 +130,9 @@
             />
             <c:choose>
               <c:when test="${usuLogado.isLogged == true}">
-                <a class="strLink" href="/manutencao">Propriet&aacute;rios</a>
+                <a class="strLink" href="http://localhost:4200/proprietarios"
+                  >Propriet&aacute;rios</a
+                >
               </c:when>
               <c:when test="${usuLogado.isLogged == false}">
                 <p class="strLinkInactive">Propriet&aacute;rios</p>
@@ -137,7 +146,9 @@
 
             <c:choose>
               <c:when test="${usuLogado.isLogged == true}">
-                <a class="strLink" href="/manutencao">Apartamentos</a>
+                <a class="strLink" href="http://localhost:4200/apartamentos"
+                  >Apartamentos</a
+                >
               </c:when>
               <c:when test="${usuLogado.isLogged == false}">
                 <p class="strLinkInactive">Apartamentos</p>
@@ -148,7 +159,7 @@
             <img src="${pageContext.request.contextPath}/imagens/vaga.png" />
             <c:choose>
               <c:when test="${usuLogado.isLogged == true}">
-                <a class="strLink" href="/manutencao">Vagas</a>
+                <a class="strLink" href="http://localhost:4200/vagas">Vagas</a>
               </c:when>
               <c:when test="${usuLogado.isLogged == false}">
                 <p class="strLinkInactive">Vagas</p>
@@ -159,7 +170,9 @@
             <img src="${pageContext.request.contextPath}/imagens/veiculo.png" />
             <c:choose>
               <c:when test="${usuLogado.isLogged == true}">
-                <a class="strLink" href="/manutencao">Ve&iacute;culos</a>
+                <a class="strLink" href="http://localhost:4200/veiculos"
+                  >Ve&iacute;culos</a
+                >
               </c:when>
               <c:when test="${usuLogado.isLogged == false}">
                 <p class="strLinkInactive">Ve&iacute;culos</p>
@@ -253,10 +266,17 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      let botao = document.getElementById('btnLogout')
-      botao.addEventListener('click', function () {
-        navigate('/')
-      })
+      let usuNome = document.getElementById('usuNome').innerHTML
+      if (usuNome != '') {
+        localStorage.setItem('nome_usuario', usuNome)
+      } else {
+        localStorage.removeItem('nome_usuario')
+      }
+
+      // let botao = document.getElementById('btnLogin')
+      // botao.addEventListener('click', function () {
+      //   navigate('/')
+      // })
     </script>
   </body>
 </html>
